@@ -1,0 +1,23 @@
+=== FILE 1: /etc/fail2ban/jail.local (Cấu hình chặn) ===
+
+[node-app-jail]
+enabled = true
+port    = 3000
+filter  = node-app
+# Đường dẫn file log (dựa trên ảnh bạn gửi)
+logpath = /home/llinh/bruteforce-demo/auth.log
+maxretry = 3
+findtime = 60
+bantime  = 60
+action   = iptables-allports[name=node-app]
+
+
+-------------------------------------------------------
+
+
+=== FILE 2: /etc/fail2ban/filter.d/node-app.conf (Bộ lọc Log) ===
+
+[Definition]
+# Regex này khớp với dòng log trong server.js của bạn
+failregex = ^.*\[FAILED_LOGIN\] IP: (::ffff:)?<HOST>$
+ignoreregex =
